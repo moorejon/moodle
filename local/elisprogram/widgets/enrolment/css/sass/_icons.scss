@@ -1,0 +1,31 @@
+@mixin iconbasics() {
+    display: inline-block;
+    speak: none;
+    font: {
+        family: 'icomoon';
+        style: normal;
+        weight: normal;
+        variant: normal;
+    }
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+}
+
+$searchiconnonbase64: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10"><circle cx="3.5" cy="3.5" r="3" style="stroke:rgba(0,0,0, 0.5);stroke-width:0.5" fill-opacity="0"/><line x1="5.7" y1="5.7" x2="10" y2="10" style="stroke:rgba(0,0,0, 0.5);stroke-width:1" /></svg>';
+$searchicon: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCI+PGNpcmNsZSBjeD0iMy41IiBjeT0iMy41IiByPSIzIiBzdHlsZT0ic3Ryb2tlOnJnYmEoMCwwLDAsIDAuNSk7c3Ryb2tlLXdpZHRoOjAuNSIgZmlsbC1vcGFjaXR5PSIwIi8+PGxpbmUgeDE9IjUuNyIgeTE9IjUuNyIgeDI9IjEwIiB5Mj0iMTAiIHN0eWxlPSJzdHJva2U6cmdiYSgwLDAsMCwgMC41KTtzdHJva2Utd2lkdGg6MSIgLz48L3N2Zz4=';
+$sorticon: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="100" width="100"><polygon points="50,65 70,95 90,65 75,65 75,5 65,5 65,65" style="fill:rgba(0,0,0,0.5);"></polygon><polygon points="50,35 30,5 10,35 25,35 25,95 35,95 35,35" style="fill:rgba(0,0,0,0.5);"></polygon></svg>';
+
+.elisenrolicon-info {
+    background: {
+        image: url('data:image/svg+xml;utf8,<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32" viewBox="0 0 32 32">
+<g>
+    <line stroke-width="1" x1="" y1="" x2="" y2="" stroke="#449FDB" opacity=""></line>
+</g>
+    <path d="M16 0c-8.837 0-16 7.163-16 16s7.163 16 16 16 16-7.163 16-16-7.163-16-16-16zM14 6h4v4h-4v-4zM20 26h-8v-2h2v-8h-2v-2h6v10h2v2z" fill="#000000"></path>
+</svg>');
+        repeat: no-repeat;
+        position: center center;
+        size: contain;
+    }
+}

@@ -1,0 +1,550 @@
+/* General Dropdown */
+.deepsight_dropdown {
+  padding: 10px;
+  width: 240px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: 1px solid #ccc;
+  border-radius: 0 0 5px 5px;
+  box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.2); }
+  .deepsight_dropdown ul {
+    list-style: none;
+    margin: 0; }
+    .deepsight_dropdown ul li {
+      cursor: pointer;
+      padding: 7px;
+      border-bottom: 1px solid #ddd; }
+      .deepsight_dropdown ul li:hover {
+        background-color: #def; }
+  .deepsight_dropdown.emphasis {
+    border-color: #d80; }
+
+.deepsight_dropdown_activator:active, .deepsight_dropdown_activator.active {
+  border-bottom: 1px solid #fff !important;
+  z-index: 1000;
+  position: relative; }
+
+/* Filter Buttons */
+[class*='deepsight_filter-'] {
+  display: inline-block; }
+  [class*='deepsight_filter-'] > button {
+    outline: 0;
+    font-weight: bold;
+    font-size: 0.7rem;
+    text-align: center;
+    height: 1.6rem;
+    line-height: 100%;
+    display: inline-block;
+    padding: 0 0.4rem 0 0.5rem;
+    margin: 0.1rem;
+    margin-right: 0;
+    cursor: pointer;
+    vertical-align: middle; }
+    [class*='deepsight_filter-'] > button.filterui:not(:only-child) {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0; }
+    [class*='deepsight_filter-'] > button.emphasis {
+      border-color: #d80; }
+    [class*='deepsight_filter-'] > button * {
+      vertical-align: middle; }
+    [class*='deepsight_filter-'] > button.deepsight_filter-remove {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      border-left: 0;
+      margin-left: 0;
+      padding: 0 0.3rem;
+      margin-right: 0.2rem; }
+
+.deepsight_filter-switch {
+  margin-right: 3px; }
+  .deepsight_filter-switch button.filterui.active {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0; }
+
+.deepsight_filter-textsearch button.filterui input[type="text"] {
+  display: none;
+  line-height: 100%;
+  width: 8rem;
+  margin: 0.05rem 0;
+  height: calc(100% - 0.2rem);
+  padding: 0 0.25rem; }
+.deepsight_filter-textsearch button.filterui span.selection {
+  display: inline-block; }
+.deepsight_filter-textsearch button.filterui.active input[type="text"] {
+  outline: 0;
+  display: inline-block;
+  padding: 0; }
+.deepsight_filter-textsearch button.filterui.active span.selection {
+  display: none; }
+
+.deepsight_filter-searchselect button.filterui.active {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0; }
+
+.deepsight_filter-date button.filterui.active {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0; }
+
+/* Filter Bar */
+.filterlabel {
+  float: left;
+  height: 30px;
+  line-height: 30px;
+  font-size: 0.9em;
+  display: inline-block; }
+
+.deepsight_filterbar {
+  position: relative;
+  margin-bottom: 5px;
+  margin-left: 45px; }
+  .deepsight_filterbar * {
+    text-decoration: none; }
+
+/* Filter Generator */
+.deepsight_filter_generator {
+  margin: 0.1rem;
+  display: inline-block;
+  padding: 0 0.5rem;
+  height: 1.6rem;
+  line-height: 1.5rem;
+  display: inline-block;
+  vertical-align: middle;
+  font-weight: bold;
+  font-size: 0.7rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  text-align: center;
+  cursor: pointer;
+  background: transparent; }
+  .deepsight_filter_generator:before {
+    font-size: 0.7rem;
+    margin-right: 0.25rem;
+    color: #aaa; }
+  .deepsight_filter_generator:hover {
+    border: 1px solid #ccc; }
+  .deepsight_filter_generator:active, .deepsight_filter_generator.active {
+    border: 1px solid #ccc; }
+    .deepsight_filter_generator:active:last-child, .deepsight_filter_generator.active:last-child {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0; }
+
+.deepsight_dropdown.deepsight_filter_generator_dropdown {
+  padding: 1px; }
+
+.deepsight_filter_generator_choice {
+  cursor: pointer;
+  padding: 7px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1); }
+  .deepsight_filter_generator_choice:last-child {
+    border-bottom: 0; }
+  .deepsight_filter_generator_choice:hover {
+    background-color: #def; }
+
+/* Filter Dropdowns */
+.deepsight_dropdown.deepsight_filter_dropdown {
+  padding: 15px 10px 10px 10px; }
+  .deepsight_dropdown.deepsight_filter_dropdown input[type="text"] {
+    width: 150px;
+    border: 1px solid #ddd; }
+  .deepsight_dropdown.deepsight_filter_dropdown .filter_search {
+    margin-bottom: 10px; }
+  .deepsight_dropdown.deepsight_filter_dropdown .selections .selected_title {
+    display: block;
+    font-size: 0.8em;
+    font-style: italic; }
+  .deepsight_dropdown.deepsight_filter_dropdown .choicelist {
+    border-top: 1px solid #eee;
+    padding: 5px 0; }
+    .deepsight_dropdown.deepsight_filter_dropdown .choicelist input[type="checkbox"] {
+      float: left;
+      position: relative;
+      top: 4px;
+      left: 3px; }
+    .deepsight_dropdown.deepsight_filter_dropdown .choicelist label {
+      display: block;
+      padding: 3px 0 3px 21px; }
+      .deepsight_dropdown.deepsight_filter_dropdown .choicelist label:hover {
+        background-color: #def; }
+
+.deepsight_calendar {
+  text-align: center; }
+  .deepsight_calendar table {
+    width: 100%;
+    border-collapse: separate; }
+  .deepsight_calendar .prevmonth, .deepsight_calendar .nextmonth, .deepsight_calendar .monthyear {
+    padding: 0; }
+  .deepsight_calendar .monthyear input[type="text"] {
+    outline: 0;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    width: 40px; }
+  .deepsight_calendar td {
+    border: 1px solid transparent; }
+    .deepsight_calendar td:hover {
+      cursor: pointer;
+      font-weight: bold;
+      background-color: #eee;
+      background-color: rgba(0, 0, 0, 0.1); }
+    .deepsight_calendar td.selected {
+      font-weight: bold;
+      background-color: #eee;
+      background-color: rgba(0, 0, 0, 0.1);
+      border: 1px solid #ddd;
+      border: 1px solid rgba(0, 0, 0, 0.2); }
+  .deepsight_calendar .prevmonth button, .deepsight_calendar .nextmonth button {
+    cursor: pointer;
+    border: 0;
+    background: transparent;
+    margin: 0;
+    padding: 0.5em;
+    opacity: 0.5; }
+  .deepsight_calendar .prevmonth:hover button, .deepsight_calendar .nextmonth:hover button {
+    opacity: 1; }
+
+.ds_pagelinks {
+  display: inline-block;
+  width: 100%;
+  margin: 0.25rem 0;
+  text-align: right;
+  font-size: 0.7rem; }
+  .ds_pagelinks > span {
+    display: inline-block;
+    margin-left: 0.5rem; }
+  .ds_pagelinks a, .ds_pagelinks strong {
+    display: inline-block;
+    padding: 2px 7px;
+    font-size: 1.1em; }
+  .ds_pagelinks .pagearrow {
+    display: inline-block;
+    line-height: 1rem;
+    width: 1rem;
+    font-size: 0.8rem;
+    margin: 0; }
+
+.elisenrolicon-info {
+  background-image: url('data:image/svg+xml;utf8,<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32" viewBox="0 0 32 32"> <g> <line stroke-width="1" x1="" y1="" x2="" y2="" stroke="#449FDB" opacity=""></line> </g> <path d="M16 0c-8.837 0-16 7.163-16 16s7.163 16 16 16 16-7.163 16-16-7.163-16-16-16zM14 6h4v4h-4v-4zM20 26h-8v-2h2v-8h-2v-2h6v10h2v2z" fill="#000000"></path> </svg>');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain; }
+
+@-webkit-keyframes spin {
+  from {
+    -webkit-transform: rotate(0deg); }
+
+  to {
+    -webkit-transform: rotate(360deg); } }
+@-moz-keyframes spin {
+  from {
+    -moz-transform: rotate(0deg); }
+
+  to {
+    -moz-transform: rotate(360deg); } }
+@keyframes spin {
+  from {
+    transform: rotate(0deg); }
+
+  to {
+    transform: rotate(360deg); } }
+.elisenrolicon-info {
+  background-image: url('data:image/svg+xml;utf8,<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32" viewBox="0 0 32 32"> <g> <line stroke-width="1" x1="" y1="" x2="" y2="" stroke="#449FDB" opacity=""></line> </g> <path d="M16 0c-8.837 0-16 7.163-16 16s7.163 16 16 16 16-7.163 16-16-7.163-16-16-16zM14 6h4v4h-4v-4zM20 26h-8v-2h2v-8h-2v-2h6v10h2v2z" fill="#000000"></path> </svg>');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain; }
+
+.deepsight_filter_generator {
+  padding: 0; }
+  .deepsight_filter_generator:before {
+    font-size: 0.7rem;
+    margin: 0;
+    color: #aaa;
+    content: '' !important;
+    font-family: inherit !important;
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMCIgaGVpZ2h0PSIxMCI+PGNpcmNsZSBjeD0iMy41IiBjeT0iMy41IiByPSIzIiBzdHlsZT0ic3Ryb2tlOnJnYmEoMCwwLDAsIDAuNSk7c3Ryb2tlLXdpZHRoOjAuNSIgZmlsbC1vcGFjaXR5PSIwIi8+PGxpbmUgeDE9IjUuNyIgeTE9IjUuNyIgeDI9IjEwIiB5Mj0iMTAiIHN0eWxlPSJzdHJva2U6cmdiYSgwLDAsMCwgMC41KTtzdHJva2Utd2lkdGg6MSIgLz48L3N2Zz4=");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 60%;
+    display: inline-block;
+    width: 1.6rem;
+    height: 1.6rem;
+    vertical-align: middle; }
+
+.deepsight_filter_generator_choice {
+  padding: 0.25rem 0.5rem; }
+
+.eliswidget_enrolment svg.elisprogress {
+  background-color: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  padding: 0.1rem; }
+  .eliswidget_enrolment svg.elisprogress rect {
+    fill: #000; }
+.eliswidget_enrolment .elisloader {
+  display: block;
+  text-align: center; }
+  .eliswidget_enrolment .elisloader:before {
+    display: inline-block;
+    speak: none;
+    font-family: 'icomoon';
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -webkit-animation-name: spin;
+    -moz-animation-name: spin;
+    -ms-animation-name: spin;
+    -webkit-animation-duration: 1500ms;
+    -moz-animation-duration: 1500ms;
+    -ms-animation-duration: 1500ms;
+    -webkit-animation-iteration-count: infinite;
+    -moz-animation-iteration-count: infinite;
+    -ms-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    -moz-animation-timing-function: linear;
+    -ms-animation-timing-function: linear;
+    content: "\e01f";
+    display: inline-block;
+    color: rgba(0, 0, 0, 0.2);
+    padding: 0;
+    margin: 0; }
+.eliswidget_enrolment .childrenlist .loading {
+  position: relative;
+  overflow: hidden;
+  min-height: 5rem; }
+  .eliswidget_enrolment .childrenlist .loading:before {
+    display: inline-block;
+    speak: none;
+    font-family: 'icomoon';
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -webkit-animation-name: spin;
+    -moz-animation-name: spin;
+    -ms-animation-name: spin;
+    -webkit-animation-duration: 1500ms;
+    -moz-animation-duration: 1500ms;
+    -ms-animation-duration: 1500ms;
+    -webkit-animation-iteration-count: infinite;
+    -moz-animation-iteration-count: infinite;
+    -ms-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    -moz-animation-timing-function: linear;
+    -ms-animation-timing-function: linear;
+    content: "\e01f";
+    display: inline-block;
+    color: rgba(0, 0, 0, 0.2);
+    padding: 0;
+    margin: 0;
+    font-size: 5rem;
+    position: absolute;
+    top: calc(50% - 2.5rem);
+    left: calc(50% - 2.5rem); }
+  .eliswidget_enrolment .childrenlist .loading > * {
+    opacity: 0.2;
+    transition: all 100ms linear; }
+.eliswidget_enrolment .childrenlist .childrenlistheader {
+  display: inline-block;
+  width: 100%;
+  margin: 0.2rem 0; }
+  .eliswidget_enrolment .childrenlist .childrenlistheader > h6 {
+    display: inline-block;
+    margin: 0.25rem 0.5rem 0.25rem 0; }
+.eliswidget_enrolment .program > svg.elisprogress {
+  width: 15%;
+  height: 0.5rem;
+  float: right;
+  margin-top: 0.8rem;
+  margin-right: 0.4rem;
+  margin-left: 0.4rem; }
+.eliswidget_enrolment .program > .header {
+  padding: 0.5rem 0 0.5rem 1.1rem;
+  margin: 0;
+  line-height: 1.2rem;
+  position: relative; }
+  .eliswidget_enrolment .program > .header:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    cursor: pointer; }
+  .eliswidget_enrolment .program > .header:before {
+    margin-right: 0.1rem;
+    content: "\e020";
+    color: rgba(0, 0, 0, 0.2);
+    display: inline-block;
+    speak: none;
+    font-family: 'icomoon';
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    position: absolute;
+    left: 0;
+    top: 0.55rem; }
+.eliswidget_enrolment .program.expanded > .header {
+  border-bottom: 1px dotted rgba(0, 0, 0, 0.2); }
+  .eliswidget_enrolment .program.expanded > .header:before {
+    color: rgba(0, 0, 0, 0.4);
+    content: "\e021"; }
+.eliswidget_enrolment .program.expanded > .childrenlist {
+  display: block;
+  margin-bottom: 1rem; }
+.eliswidget_enrolment .program > .childrenlist {
+  display: none;
+  padding: 0 0.5rem; }
+  .eliswidget_enrolment .program > .childrenlist .elisloader {
+    font-size: 5rem; }
+.eliswidget_enrolment .course > .header, .eliswidget_enrolment .courseset > .header {
+  margin: 0;
+  padding: 0.4rem 0;
+  display: block;
+  cursor: pointer;
+  line-height: 1rem; }
+  .eliswidget_enrolment .course > .header > .title, .eliswidget_enrolment .courseset > .header > .title {
+    display: block;
+    vertical-align: top;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0 0 0 0.8rem;
+    position: relative;
+    line-height: 1rem; }
+    .eliswidget_enrolment .course > .header > .title:before, .eliswidget_enrolment .courseset > .header > .title:before {
+      content: "\e020";
+      color: rgba(0, 0, 0, 0.2);
+      display: inline-block;
+      speak: none;
+      font-family: 'icomoon';
+      font-style: normal;
+      font-weight: normal;
+      font-variant: normal;
+      text-transform: none;
+      line-height: 1;
+      -webkit-font-smoothing: antialiased;
+      position: absolute;
+      left: 0;
+      top: 0.15rem; }
+  .eliswidget_enrolment .course > .header > small, .eliswidget_enrolment .courseset > .header > small {
+    padding: 0 0 0 0.8rem; }
+  .eliswidget_enrolment .course > .header > .details, .eliswidget_enrolment .courseset > .header > .details {
+    display: none;
+    vertical-align: top;
+    padding: 0.5rem 0.5rem 0rem 0.8rem; }
+    .eliswidget_enrolment .course > .header > .details .item, .eliswidget_enrolment .courseset > .header > .details .item {
+      margin-bottom: 0.3rem;
+      font-size: 0.7rem;
+      display: block;
+      line-height: 0.9rem; }
+      .eliswidget_enrolment .course > .header > .details .item > .key, .eliswidget_enrolment .courseset > .header > .details .item > .key {
+        font-weight: bold;
+        margin-right: 0.3rem; }
+    .eliswidget_enrolment .course > .header > .details .morelesslink, .eliswidget_enrolment .courseset > .header > .details .morelesslink {
+      display: block; }
+    .eliswidget_enrolment .course > .header > .details > .item:last-child, .eliswidget_enrolment .courseset > .header > .details > .item:last-child {
+      margin-bottom: 0; }
+  .eliswidget_enrolment .course > .header:hover, .eliswidget_enrolment .courseset > .header:hover {
+    background-color: rgba(0, 0, 0, 0.05); }
+.eliswidget_enrolment .course.expanded, .eliswidget_enrolment .courseset.expanded {
+  outline: 1px solid rgba(0, 0, 0, 0.3);
+  margin-bottom: 1rem; }
+  .eliswidget_enrolment .course.expanded > .header, .eliswidget_enrolment .courseset.expanded > .header {
+    padding-bottom: 0.2rem;
+    border-bottom: 1px dotted rgba(0, 0, 0, 0.1); }
+    .eliswidget_enrolment .course.expanded > .header > .title:before, .eliswidget_enrolment .courseset.expanded > .header > .title:before {
+      color: rgba(0, 0, 0, 0.4);
+      content: "\e021"; }
+    .eliswidget_enrolment .course.expanded > .header > .details, .eliswidget_enrolment .courseset.expanded > .header > .details {
+      display: block; }
+  .eliswidget_enrolment .course.expanded > .childrenlist, .eliswidget_enrolment .courseset.expanded > .childrenlist {
+    display: block; }
+.eliswidget_enrolment .course > .childrenlist, .eliswidget_enrolment .courseset > .childrenlist {
+  display: none;
+  margin-left: 0.8rem; }
+  .eliswidget_enrolment .course > .childrenlist > .elisloader, .eliswidget_enrolment .courseset > .childrenlist > .elisloader {
+    font-size: 1.5rem; }
+  .eliswidget_enrolment .course > .childrenlist .childrenlistheader, .eliswidget_enrolment .courseset > .childrenlist .childrenlistheader {
+    margin-bottom: 0.5rem; }
+.eliswidget_enrolment .courseset.expanded {
+  outline: none; }
+.eliswidget_enrolment .pmclass {
+  padding: 0.3rem 0.3rem 0.3rem 0; }
+  .eliswidget_enrolment .pmclass > .details .item {
+    display: block;
+    font-size: 80%;
+    line-height: 0.9rem;
+    margin-bottom: 0.2rem; }
+    .eliswidget_enrolment .pmclass > .details .item .key {
+      font-weight: bold;
+      display: inline-block;
+      margin-right: 0.25rem; }
+    .eliswidget_enrolment .pmclass > .details .item .pmclassstatus a {
+      display: inline-block;
+      margin-left: 0.25rem; }
+  .eliswidget_enrolment .pmclass > .details .item.instructors .val span:not(:last-child):after {
+    content: ', '; }
+  .eliswidget_enrolment .pmclass .smloader {
+    display: inline-block;
+    text-align: center;
+    margin-left: 0.3rem; }
+    .eliswidget_enrolment .pmclass .smloader:after {
+      display: inline-block;
+      speak: none;
+      font-family: 'icomoon';
+      font-style: normal;
+      font-weight: normal;
+      font-variant: normal;
+      text-transform: none;
+      line-height: 1;
+      -webkit-font-smoothing: antialiased;
+      -webkit-animation-name: spin;
+      -moz-animation-name: spin;
+      -ms-animation-name: spin;
+      -webkit-animation-duration: 1500ms;
+      -moz-animation-duration: 1500ms;
+      -ms-animation-duration: 1500ms;
+      -webkit-animation-iteration-count: infinite;
+      -moz-animation-iteration-count: infinite;
+      -ms-animation-iteration-count: infinite;
+      -webkit-animation-timing-function: linear;
+      -moz-animation-timing-function: linear;
+      -ms-animation-timing-function: linear;
+      content: "\e01f";
+      display: inline-block;
+      color: #000;
+      padding: 0;
+      margin: 0 0 0 0.2rem; }
+
+#block-region-side-pre .eliswidget_enrolment .deepsight_filter-textsearch, #block-region-side-post .eliswidget_enrolment .deepsight_filter-textsearch {
+  min-width: 6.5rem; }
+  #block-region-side-pre .eliswidget_enrolment .deepsight_filter-textsearch button.filterui, #block-region-side-post .eliswidget_enrolment .deepsight_filter-textsearch button.filterui {
+    max-width: calc(100% - 1.8rem); }
+    #block-region-side-pre .eliswidget_enrolment .deepsight_filter-textsearch button.filterui input[type="text"], #block-region-side-post .eliswidget_enrolment .deepsight_filter-textsearch button.filterui input[type="text"] {
+      max-width: calc(100% - 2.4rem);
+      width: 100%; }
+    #block-region-side-pre .eliswidget_enrolment .deepsight_filter-textsearch button.filterui .selection, #block-region-side-post .eliswidget_enrolment .deepsight_filter-textsearch button.filterui .selection {
+      max-width: calc(100% - 2.3rem);
+      overflow: hidden;
+      word-wrap: break-word;
+      white-space: nowrap; }
+  #block-region-side-pre .eliswidget_enrolment .deepsight_filter-textsearch button.deepsight_filter-remove, #block-region-side-post .eliswidget_enrolment .deepsight_filter-textsearch button.deepsight_filter-remove {
+    width: 1.5rem; }
+#block-region-side-pre .eliswidget_enrolment .program > h5, #block-region-side-post .eliswidget_enrolment .program > h5 {
+  font-size: 0.9rem;
+  line-height: 1rem; }
+#block-region-side-pre .eliswidget_enrolment .program > .childrenlist, #block-region-side-post .eliswidget_enrolment .program > .childrenlist {
+  padding: 0; }
+#block-region-side-pre .eliswidget_enrolment .course > .header .item, #block-region-side-post .eliswidget_enrolment .course > .header .item {
+  line-height: 0.8rem; }
+  #block-region-side-pre .eliswidget_enrolment .course > .header .item .key, #block-region-side-post .eliswidget_enrolment .course > .header .item .key {
+    display: block; }
+#block-region-side-pre .eliswidget_enrolment .course .pmclassheader h6, #block-region-side-post .eliswidget_enrolment .course .pmclassheader h6 {
+  float: none; }
+#block-region-side-pre .eliswidget_enrolment .course .pmclassheader .searchbox, #block-region-side-post .eliswidget_enrolment .course .pmclassheader .searchbox {
+  float: none;
+  width: 90%; }
+#block-region-side-pre .eliswidget_enrolment .pmclass .details .item, #block-region-side-post .eliswidget_enrolment .pmclass .details .item {
+  line-height: 0.8rem;
+  margin-bottom: 0.2rem; }
+  #block-region-side-pre .eliswidget_enrolment .pmclass .details .item .key, #block-region-side-post .eliswidget_enrolment .pmclass .details .item .key {
+    display: block; }

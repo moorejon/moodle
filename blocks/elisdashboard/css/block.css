@@ -1,0 +1,29 @@
+.block_elisdashboard .closebutton {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-weight: bold;
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 0.2rem 0.8rem;
+  border-radius: 0 0 0 0.5rem;
+  cursor: pointer; }
+  .block_elisdashboard .closebutton:hover {
+    background-color: rgba(0, 0, 0, 0.25); }
+.block_elisdashboard .expandlinks {
+  display: block;
+  text-align: right; }
+.block_elisdashboard.block_elisdashboard_expanded {
+  position: absolute !important;
+  top: 2rem;
+  left: 5%;
+  width: 90%;
+  z-index: 999999;
+  outline: 1rem solid rgba(0, 0, 0, 0.5);
+  border-radius: 0; }
+  .block_elisdashboard.block_elisdashboard_expanded .closebutton {
+    display: inline-block; }
+  .block_elisdashboard.block_elisdashboard_expanded .eliswidget {
+    padding: 3rem; }
+  .block_elisdashboard.block_elisdashboard_expanded .expandlinks {
+    display: none; }

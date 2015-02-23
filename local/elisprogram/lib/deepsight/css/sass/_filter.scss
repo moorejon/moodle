@@ -1,0 +1,178 @@
+/* Filter Buttons */
+[class*='deepsight_filter-'] {
+    display: inline-block;
+    > button {
+        outline: 0;
+        font-weight: bold;
+        font-size: 0.7rem;
+        text-align: center;
+        height: 1.6rem;
+        line-height: 100%;
+        display: inline-block;
+        padding: 0 0.4rem 0 0.5rem;
+        margin: 0.1rem;
+        margin-right: 0;
+        cursor: pointer;
+        vertical-align: middle;
+        &.filterui:not(:only-child) {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+        &.emphasis {
+            border-color: #d80;
+        }
+        * {
+            vertical-align: middle;
+        }
+        &.deepsight_filter-remove {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            border-left: 0;
+            margin-left: 0;
+            padding: 0 0.3rem;
+            margin-right: 0.2rem;
+        }
+    }
+}
+.deepsight_filter-switch {
+    margin-right: 3px;
+    button.filterui.active {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+}
+.deepsight_filter-textsearch {
+    button.filterui {
+        input[type="text"] {
+            display: none;
+            line-height: 100%;
+            width: 8rem;
+            margin: 0.05rem 0;
+            height: calc(100% - 0.2rem);
+            padding: 0 0.25rem;
+        }
+        span.selection {
+            display: inline-block;
+        }
+        &.active {
+            input[type="text"] {
+                outline: 0;
+                display: inline-block;
+                padding: 0;
+            }
+            span.selection {
+                display: none;
+            }
+        }
+    }
+}
+.deepsight_filter-searchselect {
+    button.filterui.active {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+}
+.deepsight_filter-date {
+    button.filterui.active {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+}
+
+
+/* Filter Bar */
+.filterlabel {
+    float: left;
+    height: 30px;
+    line-height: 30px;
+    font-size: 0.9em;
+    display: inline-block;
+}
+.deepsight_filterbar {
+    position: relative;
+    margin-bottom: 5px;
+    margin-left: 45px;
+    * {
+        text-decoration: none;
+    }
+}
+/* Filter Generator */
+.deepsight_filter_generator {
+    margin: 0.1rem;
+    display: inline-block;
+    padding: 0 0.5rem;
+    height: 1.6rem;
+    line-height: 1.5rem;
+    display: inline-block;
+    vertical-align: middle;
+    font-weight: bold;
+    font-size: 0.7rem;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    text-align: center;
+    cursor: pointer;
+    background: transparent;
+    &:before {
+        font-size: 0.7rem;
+        margin-right: 0.25rem;
+        color: #aaa;
+    }
+    &:hover {
+        border: 1px solid #ccc;
+    }
+    &:active, &.active {
+        border: 1px solid #ccc;
+        &:last-child {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+    }
+}
+
+.deepsight_dropdown.deepsight_filter_generator_dropdown {
+    padding: 1px;
+}
+.deepsight_filter_generator_choice {
+    cursor: pointer;
+    padding: 7px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    &:last-child {
+        border-bottom: 0;
+    }
+    &:hover {
+        background-color: #def;
+    }
+}
+
+/* Filter Dropdowns */
+.deepsight_dropdown.deepsight_filter_dropdown {
+    padding: 15px 10px 10px 10px;
+    input[type="text"] {
+        width: 150px;
+        border: 1px solid #ddd;
+    }
+    .filter_search {
+        margin-bottom: 10px;
+    }
+    .selections .selected_title {
+        display: block;
+        font-size: 0.8em;
+        font-style: italic;
+    }
+    .choicelist {
+        border-top: 1px solid #eee;
+        padding: 5px 0;
+        input[type="checkbox"] {
+            float: left;
+            position: relative;
+            top: 4px;
+            left: 3px;
+        }
+        label {
+            display: block;
+            padding: 3px 0 3px 21px;
+            &:hover {
+                background-color: #def;
+            }
+        }
+    }
+}

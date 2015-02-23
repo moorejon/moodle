@@ -1,0 +1,33 @@
+/* JS Fancy Tooltip */
+.fancy_tooltip {
+    background-color: #000;
+    background-color: rgba(0, 0, 0, 0.8);
+    font-size: 1em;
+    font-weight: bold;
+    padding: 5px;
+    border-radius: 3px;
+    display: inline-block;
+    border: 1px solid #fff;
+    color: #fff;
+}
+.fancy_tooltip:before {
+    content: '';
+    position: absolute;
+}
+.fancy_tooltip.bottom:before,
+.fancy_tooltip.top:before {
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    left: 50%;
+    margin-left: -5px;
+}
+.fancy_tooltip.bottom:before {
+    border-bottom: 10px solid #000;
+    border-bottom: 10px solid rgba(0, 0, 0, 0.8);
+    bottom: 100%;
+}
+.fancy_tooltip.top:before {
+    border-top: 10px solid #000;
+    border-top: 10px solid rgba(0, 0, 0, 0.8);
+    top: 100%;
+}

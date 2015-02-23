@@ -1,0 +1,6 @@
+@mixin vendorprefix($param, $val) {
+    -webkit-#{$param}: $val;
+    -moz-#{$param}: $val;
+    -ms-#{$param}: $val;
+    $param: $val;
+}
