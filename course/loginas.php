@@ -13,10 +13,21 @@ $PAGE->set_url($url);
 // Reset user back to their real self if needed, for security reasons you need to log out and log in again.
 if (\core\session\manager::is_loggedinas()) {
     require_sesskey();
-    require_logout();
+    // See https://tracker.moodle.org/browse/MDL-24120 for Moodle tracker, allows user to return to original user account after loingas
+    // JM 12/15/2014
+    //require_logout();
+    $_SESSION['SESSION'] = $_SESSION['REALSESSION'];
+    $_SESSION['USER'] = $_SESSION['REALUSER'];
 
+    unset($_SESSION['REALSESSION']);
+    unset($_SESSION['REALUSER']);
     // We can not set wanted URL here because the session is closed.
-    redirect(new moodle_url($url, array('redirect'=>1)));
+    //redirect(new moodle_url($url, array('redirect'=>1)));
+    //if ($id and $id != SITEID) {
+        //redirect("$CFG->wwwroot/course/view.php?id=".$id);
+    //} else {
+    redirect("$CFG->wwwroot/");
+    //}
 }
 
 if ($redirect) {
