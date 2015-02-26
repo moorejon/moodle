@@ -1,13 +1,38 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-require_once '../../config.php';
-require_once 'lib.php';
-require_once 'cancelsignup_form.php';
+/**
+ * Copyright (C) 2007-2011 Catalyst IT (http://www.catalyst.net.nz)
+ * Copyright (C) 2011-2013 Totara LMS (http://www.totaralms.com)
+ * Copyright (C) 2014 onwards Catalyst IT (http://www.catalyst-eu.net)
+ *
+ * @package    mod
+ * @subpackage facetoface
+ * @copyright  2014 onwards Catalyst IT <http://www.catalyst-eu.net>
+ * @author     Stacey Walker <stacey@catalyst-eu.net>
+ * @author     Alastair Munro <alastair.munro@totaralms.com>
+ * @author     Aaron Barnes <aaron.barnes@totaralms.com>
+ * @author     Francois Marier <francois@catalyst.net.nz>
+ */
 
-global $DB;
+require_once(dirname(dirname(dirname(__FILE__))) . '/config.php');
+require_once('lib.php');
 
-$s  = required_param('s', PARAM_INT); // facetoface session ID
-$confirm           = optional_param('confirm', false, PARAM_BOOL);
+$s = required_param('s', PARAM_INT); // Facetoface session ID.
+$confirm = optional_param('confirm', false, PARAM_BOOL);
 $backtoallsessions = optional_param('backtoallsessions', 0, PARAM_INT);
 
 if (!$session = facetoface_get_session($s)) {
@@ -37,7 +62,7 @@ if ($mform->is_cancelled()) {
     redirect($returnurl);
 }
 
-if ($fromform = $mform->get_data()) { // Form submitted
+if ($fromform = $mform->get_data()) { // Form submitted.
 
     if (empty($fromform->submitbutton)) {
         print_error('error:unknownbuttonclicked', 'facetoface', $returnurl);
@@ -47,7 +72,16 @@ if ($fromform = $mform->get_data()) { // Form submitted
 
     $errorstr = '';
     if (facetoface_user_cancel($session, false, false, $errorstr, $fromform->cancelreason)) {
-        add_to_log($course->id, 'facetoface', 'cancel booking', "cancelsignup.php?s=$session->id", $facetoface->id, $cm->id);
+
+        // Logging and events trigger.
+        $params = array(
+            'context'  => $contextmodule,
+            'objectid' => $session->id
+        );
+        $event = \mod_facetoface\event\cancel_booking::create($params);
+        $event->add_record_snapshot('facetoface_sessions', $session);
+        $event->add_record_snapshot('facetoface', $facetoface);
+        $event->trigger();
 
         $message = get_string('bookingcancelled', 'facetoface');
 
@@ -56,8 +90,7 @@ if ($fromform = $mform->get_data()) { // Form submitted
             if (empty($error)) {
                 if ($session->datetimeknown && $facetoface->cancellationinstrmngr) {
                     $message .= html_writer::empty_tag('br') . html_writer::empty_tag('br') . get_string('cancellationsentmgr', 'facetoface');
-                }
-                else {
+                } else {
                     $message .= html_writer::empty_tag('br') . html_writer::empty_tag('br') . get_string('cancellationsent', 'facetoface');
                 }
             } else {
@@ -66,9 +99,18 @@ if ($fromform = $mform->get_data()) { // Form submitted
         }
 
         redirect($returnurl, $message, $timemessage);
-    }
-    else {
-        add_to_log($course->id, 'facetoface', "cancel booking (FAILED)", "cancelsignup.php?s=$session->id", $facetoface->id, $cm->id);
+    } else {
+
+        // Logging and events trigger.
+        $params = array(
+            'context'  => $contextmodule,
+            'objectid' => $session->id
+        );
+        $event = \mod_facetoface\event\cancel_booking_failed::create($params);
+        $event->add_record_snapshot('facetoface_sessions', $session);
+        $event->add_record_snapshot('facetoface', $facetoface);
+        $event->trigger();
+
         redirect($returnurl, $errorstr, $timemessage);
     }
 
@@ -96,8 +138,7 @@ echo $OUTPUT->heading($heading);
 if ($signedup) {
     facetoface_print_session($session, $viewattendees);
     $mform->display();
-}
-else {
+} else {
     print_error('notsignedup', 'facetoface', $returnurl);
 }
 

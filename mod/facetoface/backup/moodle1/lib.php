@@ -1,4 +1,32 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * Copyright (C) 2007-2011 Catalyst IT (http://www.catalyst.net.nz)
+ * Copyright (C) 2011-2013 Totara LMS (http://www.totaralms.com)
+ * Copyright (C) 2014 onwards Catalyst IT (http://www.catalyst-eu.net)
+ *
+ * @package    mod
+ * @subpackage facetoface
+ * @copyright  2014 onwards Catalyst IT <http://www.catalyst-eu.net>
+ * @author     Stacey Walker <stacey@catalyst-eu.net>
+ * @author     Alastair Munro <alastair.munro@totaralms.com>
+ * @author     Aaron Barnes <aaron.barnes@totaralms.com>
+ * @author     Francois Marier <francois@catalyst.net.nz>
+ */
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -53,27 +81,27 @@ class moodle1_mod_facetoface_handler extends moodle1_mod_handler {
     public function process_facetoface($data) {
         global $CFG;
 
-        // get the course module id and context id
+        // Get the course module id and context id.
         $instanceid     = $data['id'];
         $cminfo         = $this->get_cminfo($instanceid);
         $this->moduleid = $cminfo['id'];
         $contextid      = $this->converter->get_contextid(CONTEXT_MODULE, $this->moduleid);
 
-        // replay the upgrade step 2009042006
+        // Replay the upgrade step 2009042006.
         if ($CFG->texteditors !== 'textarea') {
             $data['intro']       = text_to_html($data['description'], false, false, true);
             $data['introformat'] = FORMAT_HTML;
         }
 
-        // get a fresh new file manager for this instance
+        // Get a fresh new file manager for this instance.
         $this->fileman = $this->converter->get_file_manager($contextid, 'mod_facetoface');
 
-        // convert course files embedded into the intro
+        // Convert course files embedded into the intro.
         $this->fileman->filearea = 'intro';
         $this->fileman->itemid   = 0;
         $data['intro'] = moodle1_converter::migrate_referenced_files($data['intro'], $this->fileman);
 
-        // start writing facetoface.xml
+        // Start writing facetoface.xml.
         $this->open_xml_writer("activities/facetoface_{$this->moduleid}/facetoface.xml");
         $this->xmlwriter->begin_tag('activity', array('id' => $instanceid, 'moduleid' => $this->moduleid,
             'modulename' => 'facetoface', 'contextid' => $contextid));
@@ -130,12 +158,13 @@ class moodle1_mod_facetoface_handler extends moodle1_mod_handler {
      * This is executed when we reach the closing </MOD> tag of our 'facetoface' path
      */
     public function on_facetoface_end() {
-        // finalize glossary.xml
+
+        // Finalize glossary.xml.
         $this->xmlwriter->end_tag('facetoface');
         $this->xmlwriter->end_tag('activity');
         $this->close_xml_writer();
 
-        // write inforef.xml
+        // Write inforef.xml.
         $this->open_xml_writer("activities/facetoface_{$this->moduleid}/inforef.xml");
         $this->xmlwriter->begin_tag('inforef');
         $this->xmlwriter->begin_tag('fileref');
@@ -146,7 +175,4 @@ class moodle1_mod_facetoface_handler extends moodle1_mod_handler {
         $this->xmlwriter->end_tag('inforef');
         $this->close_xml_writer();
     }
-
 }
-
-?>

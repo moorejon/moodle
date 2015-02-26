@@ -1,18 +1,44 @@
 <?php
-global $DB, $OUTPUT, $PAGE;
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-require_once '../../config.php';
-require_once 'lib.php';
-require_once 'session_form.php';
+/**
+ * Copyright (C) 2007-2011 Catalyst IT (http://www.catalyst.net.nz)
+ * Copyright (C) 2011-2013 Totara LMS (http://www.totaralms.com)
+ * Copyright (C) 2014 onwards Catalyst IT (http://www.catalyst-eu.net)
+ *
+ * @package    mod
+ * @subpackage facetoface
+ * @copyright  2014 onwards Catalyst IT <http://www.catalyst-eu.net>
+ * @author     Stacey Walker <stacey@catalyst-eu.net>
+ * @author     Alastair Munro <alastair.munro@totaralms.com>
+ * @author     Aaron Barnes <aaron.barnes@totaralms.com>
+ * @author     Francois Marier <francois@catalyst.net.nz>
+ */
 
-$id = optional_param('id', 0, PARAM_INT); // Course Module ID
-$f = optional_param('f', 0, PARAM_INT); // facetoface Module ID
-$s = optional_param('s', 0, PARAM_INT); // facetoface session ID
-$c = optional_param('c', 0, PARAM_INT); // copy session
-$d = optional_param('d', 0, PARAM_INT); // delete session
-$confirm = optional_param('confirm', false, PARAM_BOOL); // delete confirmation
+require_once(dirname(dirname(dirname(__FILE__))) . '/config.php');
+require_once('lib.php');
 
-$nbdays = 1; // default number to show
+$id = optional_param('id', 0, PARAM_INT); // Course Module ID.
+$f = optional_param('f', 0, PARAM_INT); // facetoface Module ID.
+$s = optional_param('s', 0, PARAM_INT); // facetoface session ID.
+$c = optional_param('c', 0, PARAM_INT); // Copy session.
+$d = optional_param('d', 0, PARAM_INT); // Delete session.
+$confirm = optional_param('confirm', false, PARAM_BOOL); // Delete confirmation.
+
+$nbdays = 1; // Default number to show.
 
 $session = null;
 if ($id && !$s) {
@@ -22,27 +48,25 @@ if ($id && !$s) {
     if (!$course = $DB->get_record('course', array('id' => $cm->course))) {
         print_error('error:coursemisconfigured', 'facetoface');
     }
-    if (!$facetoface =$DB->get_record('facetoface',array('id' => $cm->instance))) {
+    if (!$facetoface = $DB->get_record('facetoface', array('id' => $cm->instance))) {
         print_error('error:incorrectcoursemodule', 'facetoface');
     }
-}
-elseif ($s) {
-     if (!$session = facetoface_get_session($s)) {
-         print_error('error:incorrectcoursemodulesession', 'facetoface');
-     }
-     if (!$facetoface = $DB->get_record('facetoface',array('id' => $session->facetoface))) {
-         print_error('error:incorrectfacetofaceid', 'facetoface');
-     }
-     if (!$course = $DB->get_record('course', array('id'=> $facetoface->course))) {
-         print_error('error:coursemisconfigured', 'facetoface');
-     }
-     if (!$cm = get_coursemodule_from_instance('facetoface', $facetoface->id, $course->id)) {
-         print_error('error:incorrectcoursemoduleid', 'facetoface');
-     }
+} else if ($s) {
+    if (!$session = facetoface_get_session($s)) {
+        print_error('error:incorrectcoursemodulesession', 'facetoface');
+    }
+    if (!$facetoface = $DB->get_record('facetoface', array('id' => $session->facetoface))) {
+        print_error('error:incorrectfacetofaceid', 'facetoface');
+    }
+    if (!$course = $DB->get_record('course', array('id' => $facetoface->course))) {
+        print_error('error:coursemisconfigured', 'facetoface');
+    }
+    if (!$cm = get_coursemodule_from_instance('facetoface', $facetoface->id, $course->id)) {
+        print_error('error:incorrectcoursemoduleid', 'facetoface');
+    }
 
-     $nbdays = count($session->sessiondates);
-}
-else {
+    $nbdays = count($session->sessiondates);
+} else {
     if (!$facetoface = $DB->get_record('facetoface', array('id' => $f))) {
         print_error('error:incorrectfacetofaceid', 'facetoface');
     }
@@ -57,7 +81,7 @@ else {
 require_course_login($course);
 $errorstr = '';
 $context = context_course::instance($course->id);
-$module_context = context_module::instance($cm->id);
+$modulecontext = context_module::instance($cm->id);
 require_capability('mod/facetoface:editsessions', $context);
 
 $returnurl = "view.php?f=$facetoface->id";
@@ -66,21 +90,38 @@ $editoroptions = array(
     'noclean'  => false,
     'maxfiles' => EDITOR_UNLIMITED_FILES,
     'maxbytes' => $course->maxbytes,
-    'context'  => $module_context,
+    'context'  => $modulecontext,
 );
 
 
-// Handle deletions
+// Handle deletions.
 if ($d and $confirm) {
     if (!confirm_sesskey()) {
         print_error('confirmsesskeybad', 'error');
     }
 
     if (facetoface_delete_session($session)) {
-        add_to_log($course->id, 'facetoface', 'delete session', 'sessions.php?s='.$session->id, $facetoface->id, $cm->id);
-    }
-    else {
-        add_to_log($course->id, 'facetoface', 'delete session (FAILED)', 'sessions.php?s='.$session->id, $facetoface->id, $cm->id);
+
+        // Logging and events trigger.
+        $params = array(
+            'context'  => $modulecontext,
+            'objectid' => $session->id
+        );
+        $event = \mod_facetoface\event\delete_session::create($params);
+        $event->add_record_snapshot('facetoface_sessions', $session);
+        $event->add_record_snapshot('facetoface', $facetoface);
+        $event->trigger();
+    } else {
+
+        // Logging and events trigger.
+        $params = array(
+            'context'  => $modulecontext,
+            'objectid' => $session->id
+        );
+        $event = \mod_facetoface\event\delete_session_failed::create($params);
+        $event->add_record_snapshot('facetoface_sessions', $session);
+        $event->add_record_snapshot('facetoface', $facetoface);
+        $event->trigger();
         print_error('error:couldnotdeletesession', 'facetoface', $returnurl);
     }
     redirect($returnurl);
@@ -94,7 +135,7 @@ $details = new stdClass();
 $details->id = isset($session) ? $session->id : 0;
 $details->details = isset($session->details) ? $session->details : '';
 $details->detailsformat = FORMAT_HTML;
-$details = file_prepare_standard_editor($details, 'details', $editoroptions, $module_context, 'mod_facetoface', 'session', $sessionid);
+$details = file_prepare_standard_editor($details, 'details', $editoroptions, $modulecontext, 'mod_facetoface', 'session', $sessionid);
 
 $mform = new mod_facetoface_session_form(null, compact('id', 'f', 's', 'c', 'nbdays', 'customfields', 'course', 'editoroptions'));
 
@@ -102,13 +143,13 @@ if ($mform->is_cancelled()) {
     redirect($returnurl);
 }
 
-if ($fromform = $mform->get_data()) { // Form submitted
+if ($fromform = $mform->get_data()) { // Form submitted.
 
     if (empty($fromform->submitbutton)) {
         print_error('error:unknownbuttonclicked', 'facetoface', $returnurl);
     }
 
-    // Pre-process fields
+    // Pre-process fields.
     if (empty($fromform->allowoverbook)) {
         $fromform->allowoverbook = 0;
     }
@@ -125,7 +166,7 @@ if ($fromform = $mform->get_data()) { // Form submitted
     $sessiondates = array();
     for ($i = 0; $i < $fromform->date_repeats; $i++) {
         if (!empty($fromform->datedelete[$i])) {
-            continue; // skip this date
+            continue; // Skip this date.
         }
 
         $timestartfield = "timestart[$i]";
@@ -158,20 +199,36 @@ if ($fromform = $mform->get_data()) { // Form submitted
         $todb->id = $session->id;
         if (!facetoface_update_session($todb, $sessiondates)) {
             $transaction->force_transaction_rollback();
-            add_to_log($course->id, 'facetoface', 'update session (FAILED)', "sessions.php?s=$session->id", $facetoface->id, $cm->id);
+
+            // Logging and events trigger.
+            $params = array(
+                'context'  => $modulecontext,
+                'objectid' => $session->id
+            );
+            $event = \mod_facetoface\event\update_session_failed::create($params);
+            $event->add_record_snapshot('facetoface_sessions', $session);
+            $event->add_record_snapshot('facetoface', $facetoface);
+            $event->trigger();
             print_error('error:couldnotupdatesession', 'facetoface', $returnurl);
         }
 
-        // Remove old site-wide calendar entry
+        // Remove old site-wide calendar entry.
         if (!facetoface_remove_session_from_calendar($session, SITEID)) {
             $transaction->force_transaction_rollback();
             print_error('error:couldnotupdatecalendar', 'facetoface', $returnurl);
         }
-    }
-    else {
+    } else {
         if (!$sessionid = facetoface_add_session($todb, $sessiondates)) {
             $transaction->force_transaction_rollback();
-            add_to_log($course->id, 'facetoface', 'add session (FAILED)', 'sessions.php?f='.$facetoface->id, $facetoface->id, $cm->id);
+
+            // Logging and events trigger.
+            $params = array(
+                'context'  => $modulecontext,
+                'objectid' => $facetoface->id
+            );
+            $event = \mod_facetoface\event\add_session_failed::create($params);
+            $event->add_record_snapshot('facetoface', $facetoface);
+            $event->trigger();
             print_error('error:couldnotaddsession', 'facetoface', $returnurl);
         }
     }
@@ -179,7 +236,7 @@ if ($fromform = $mform->get_data()) { // Form submitted
     foreach ($customfields as $field) {
         $fieldname = "custom_$field->shortname";
         if (!isset($fromform->$fieldname)) {
-            $fromform->$fieldname = ''; // need to be able to clear fields
+            $fromform->$fieldname = ''; // Need to be able to clear fields.
         }
 
         if (!facetoface_save_customfield_value($field->id, $fromform->$fieldname, $sessionid, 'session')) {
@@ -188,38 +245,54 @@ if ($fromform = $mform->get_data()) { // Form submitted
         }
     }
 
-    // Save trainer roles
+    // Save trainer roles.
     if (isset($fromform->trainerrole)) {
         facetoface_update_trainers($sessionid, $fromform->trainerrole);
     }
 
-    // Retrieve record that was just inserted/updated
+    // Retrieve record that was just inserted/updated.
     if (!$session = facetoface_get_session($sessionid)) {
         $transaction->force_transaction_rollback();
         print_error('error:couldnotfindsession', 'facetoface', $returnurl);
     }
 
-    // Update calendar entries
+    // Update calendar entries.
     facetoface_update_calendar_entries($session, $facetoface);
-
     if ($update) {
-        add_to_log($course->id, 'facetoface', 'updated session', "sessions.php?s=$session->id", $facetoface->id, $cm->id);
-    }
-    else {
-        add_to_log($course->id, 'facetoface', 'added session', 'facetoface', 'sessions.php?f='.$facetoface->id, $facetoface->id, $cm->id);
+
+        // Logging and events trigger.
+        $params = array(
+            'context'  => $modulecontext,
+            'objectid' => $session->id
+        );
+        $event = \mod_facetoface\event\update_session::create($params);
+        $event->add_record_snapshot('facetoface_sessions', $session);
+        $event->add_record_snapshot('facetoface', $facetoface);
+        $event->trigger();
+    } else {
+
+        // Logging and events trigger.
+        $params = array(
+            'context'  => $modulecontext,
+            'objectid' => $session->id
+        );
+        $event = \mod_facetoface\event\add_session::create($params);
+        $event->add_record_snapshot('facetoface_sessions', $session);
+        $event->add_record_snapshot('facetoface', $facetoface);
+        $event->trigger();
     }
 
     $transaction->allow_commit();
 
-    $data = file_postupdate_standard_editor($fromform, 'details', $editoroptions, $module_context, 'mod_facetoface', 'session', $session->id);
+    $data = file_postupdate_standard_editor($fromform, 'details', $editoroptions, $modulecontext, 'mod_facetoface', 'session', $session->id);
     $DB->set_field('facetoface_sessions', 'details', $data->details, array('id' => $session->id));
 
     redirect($returnurl);
-}
-elseif ($session != null) { // Edit mode
-    // Set values for the form
+} else if ($session != null) { // Edit mode.
+
+    // Set values for the form.
     $toform = new stdClass();
-    $toform = file_prepare_standard_editor($details, 'details', $editoroptions, $module_context, 'mod_facetoface', 'session', $session->id);
+    $toform = file_prepare_standard_editor($details, 'details', $editoroptions, $modulecontext, 'mod_facetoface', 'session', $session->id);
 
     $toform->datetimeknown = (1 == $session->datetimeknown);
     $toform->capacity = $session->capacity;
@@ -251,14 +324,11 @@ elseif ($session != null) { // Edit mode
 
 if ($c) {
     $heading = get_string('copyingsession', 'facetoface', $facetoface->name);
-}
-else if ($d) {
+} else if ($d) {
     $heading = get_string('deletingsession', 'facetoface', $facetoface->name);
-}
-else if ($id or $f) {
+} else if ($id || $f) {
     $heading = get_string('addingsession', 'facetoface', $facetoface->name);
-}
-else {
+} else {
     $heading = get_string('editingsession', 'facetoface', $facetoface->name);
 }
 
@@ -285,8 +355,7 @@ if ($d) {
     echo $OUTPUT->confirm(get_string('deletesessionconfirm', 'facetoface', format_string($facetoface->name)),
         new moodle_url('sessions.php', $optionsyes),
         new moodle_url($returnurl));
-}
-else {
+} else {
     $mform->display();
 }
 

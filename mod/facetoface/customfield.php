@@ -1,11 +1,39 @@
 <?php
-global $DB;
-require_once '../../config.php';
-require_once 'customfield_form.php';
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-$id      = required_param('id', PARAM_INT); // ID in facetoface_session_field
-$d       = optional_param('d', false, PARAM_BOOL); // set to true to delete the given field
-$confirm = optional_param('confirm', false, PARAM_BOOL); // delete confirmationx
+/**
+ * Copyright (C) 2007-2011 Catalyst IT (http://www.catalyst.net.nz)
+ * Copyright (C) 2011-2013 Totara LMS (http://www.totaralms.com)
+ * Copyright (C) 2014 onwards Catalyst IT (http://www.catalyst-eu.net)
+ *
+ * @package    mod
+ * @subpackage facetoface
+ * @copyright  2014 onwards Catalyst IT <http://www.catalyst-eu.net>
+ * @author     Stacey Walker <stacey@catalyst-eu.net>
+ * @author     Alastair Munro <alastair.munro@totaralms.com>
+ * @author     Aaron Barnes <aaron.barnes@totaralms.com>
+ * @author     Francois Marier <francois@catalyst.net.nz>
+ */
+
+require_once(dirname(dirname(dirname(__FILE__))) . '/config.php');
+require_once($CFG->libdir . '/adminlib.php');
+
+$id      = required_param('id', PARAM_INT); // ID in facetoface_session_field.
+$d       = optional_param('d', false, PARAM_BOOL); // set to true to delete the given field.
+$confirm = optional_param('confirm', false, PARAM_BOOL); // delete confirmationx.
 
 $field = null;
 if ($id > 0) {
@@ -16,7 +44,7 @@ if ($id > 0) {
 
 $PAGE->set_url('/mod/facetoface/customfield.php', array('id' => $id, 'd' => $d, 'confirm' => $confirm));
 
-admin_externalpage_setup('managemodules'); // this is hacky, tehre should be a special hidden page for it
+admin_externalpage_setup('managemodules'); // This is hacky, there should be a special hidden page for it.
 
 $contextsystem = context_system::instance();
 
@@ -24,7 +52,7 @@ require_capability('moodle/site:config', $contextsystem);
 
 $returnurl = "$CFG->wwwroot/admin/settings.php?section=modsettingfacetoface";
 
-// Header
+// Header.
 
 $title = get_string('addnewfield', 'facetoface');
 if ($field != null) {
@@ -33,7 +61,7 @@ if ($field != null) {
 
 $PAGE->set_title($title);
 
-// Handle deletions
+// Handle deletions.
 if (!empty($d)) {
     if (!confirm_sesskey()) {
         print_error('confirmsesskeybad', 'error');
@@ -48,8 +76,7 @@ if (!empty($d)) {
             new moodle_url($returnurl));
         echo $OUTPUT->footer();
         exit;
-    }
-    else {
+    } else {
         $transaction = $DB->start_delegated_transaction();
 
         try {
@@ -75,13 +102,13 @@ if ($mform->is_cancelled()) {
     redirect($returnurl);
 }
 
-if ($fromform = $mform->get_data()) { // Form submitted
+if ($fromform = $mform->get_data()) { // Form submitted.
 
     if (empty($fromform->submitbutton)) {
         print_error('error:unknownbuttonclicked', 'facetoface', $returnurl);
     }
 
-    // Post-process the input
+    // Post-process the input.
     if (empty($fromform->required)) {
         $fromform->required = 0;
     }
@@ -95,12 +122,12 @@ if ($fromform = $mform->get_data()) { // Form submitted
         $fromform->possiblevalues = '';
     }
 
-    $values_list = explode("\n", trim($fromform->possiblevalues));
-    $pos_vals = array();
-    foreach ($values_list as $val) {
-        $trimmed_val = trim($val);
-        if (strlen($trimmed_val) != 0) {
-            $pos_vals[] = $trimmed_val;
+    $valueslist = explode("\n", trim($fromform->possiblevalues));
+    $posvals = array();
+    foreach ($valueslist as $val) {
+        $trimmedval = trim($val);
+        if (strlen($trimmedval) != 0) {
+            $posvals[] = $trimmedval;
         }
     }
 
@@ -109,7 +136,7 @@ if ($fromform = $mform->get_data()) { // Form submitted
     $todb->shortname = trim($fromform->shortname);
     $todb->type = $fromform->type;
     $todb->defaultvalue = trim($fromform->defaultvalue);
-    $todb->possiblevalues = implode(CUSTOMFIELD_DELIMITER, $pos_vals);
+    $todb->possiblevalues = implode(CUSTOMFIELD_DELIMITER, $posvals);
     $todb->required = $fromform->required;
     $todb->isfilter = $fromform->isfilter;
     $todb->showinsummary = $fromform->showinsummary;
@@ -119,25 +146,24 @@ if ($fromform = $mform->get_data()) { // Form submitted
         if (!$DB->update_record('facetoface_session_field', $todb)) {
             print_error('error:couldnotupdatefield', 'facetoface', $returnurl);
         }
-    }
-    else {
+    } else {
         if (!$DB->insert_record('facetoface_session_field', $todb)) {
             print_error('error:couldnotaddfield', 'facetoface', $returnurl);
         }
     }
 
     redirect($returnurl);
-}
-elseif ($field != null) { // Edit mode
-    // Set values for the form
+} else if ($field != null) { // Edit mode.
+
+    // Set values for the form.
     $toform = new stdClass();
     $toform->name = $field->name;
     $toform->shortname = $field->shortname;
     $toform->type = $field->type;
     $toform->defaultvalue = $field->defaultvalue;
-    $value_array = explode(CUSTOMFIELD_DELIMITER, $field->possiblevalues);
-    $possible_values = implode(PHP_EOL, $value_array);
-    $toform->possiblevalues = $possible_values;
+    $valuearray = explode(CUSTOMFIELD_DELIMITER, $field->possiblevalues);
+    $possiblevalues = implode(PHP_EOL, $valuearray);
+    $toform->possiblevalues = $possiblevalues;
     $toform->required = ($field->required == 1);
     $toform->isfilter = ($field->isfilter == 1);
     $toform->showinsummary = ($field->showinsummary == 1);

@@ -1,5 +1,35 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
 //
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * Copyright (C) 2007-2011 Catalyst IT (http://www.catalyst.net.nz)
+ * Copyright (C) 2011-2013 Totara LMS (http://www.totaralms.com)
+ * Copyright (C) 2014 onwards Catalyst IT (http://www.catalyst-eu.net)
+ *
+ * @package    mod
+ * @subpackage facetoface
+ * @copyright  2014 onwards Catalyst IT <http://www.catalyst-eu.net>
+ * @author     Stacey Walker <stacey@catalyst-eu.net>
+ * @author     Alastair Munro <alastair.munro@totaralms.com>
+ * @author     Aaron Barnes <aaron.barnes@totaralms.com>
+ * @author     Francois Marier <francois@catalyst.net.nz>
+ */
+
+defined('MOODLE_INTERNAL') || die();
+
 // Capability definitions for the facetoface module.
 //
 // The capabilities are loaded into the database table when the module is
@@ -32,8 +62,7 @@
 
 $capabilities = array(
 
-    // Ability to see that the activity exists, and the basic information
-    // about its sessions
+    // Ability to see that the activity exists, and the basic information about its sessions.
     'mod/facetoface:view' => array(
         'captype' => 'read',
         'contextlevel' => CONTEXT_MODULE,
@@ -47,7 +76,7 @@ $capabilities = array(
         )
     ),
 
-    // Ability to signup for a session
+    // Ability to signup for a session.
     'mod/facetoface:signup' => array(
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
@@ -60,7 +89,7 @@ $capabilities = array(
         )
     ),
 
-    // Ability to see activities for which no sessions have been added
+    // Ability to see activities for which no sessions have been added.
     'mod/facetoface:viewemptyactivities' => array(
         'captype' => 'read',
         'contextlevel' => CONTEXT_MODULE,
@@ -71,7 +100,7 @@ $capabilities = array(
         )
     ),
 
-    // Ability to see how many people have signed up for a session
+    // Ability to see how many people have signed up for a session.
     'mod/facetoface:viewattendees' => array(
         'captype' => 'read',
         'contextlevel' => CONTEXT_COURSE,
@@ -83,7 +112,7 @@ $capabilities = array(
         )
     ),
 
-    // Ability to take attendance
+    // Ability to take attendance.
     'mod/facetoface:takeattendance' => array(
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
@@ -95,7 +124,7 @@ $capabilities = array(
         )
     ),
 
-    // Ability to add attendees to a session
+    // Ability to add attendees to a session.
     'mod/facetoface:addattendees' => array(
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
@@ -107,7 +136,7 @@ $capabilities = array(
         )
     ),
 
-    // Ability to remove attendees from a session
+    // Ability to remove attendees from a session.
     'mod/facetoface:removeattendees' => array(
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
@@ -119,7 +148,7 @@ $capabilities = array(
         )
     ),
 
-    // Ability to add, edit, copy and delete a session
+    // Ability to add, edit, copy and delete a session.
     'mod/facetoface:editsessions' => array(
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
@@ -131,7 +160,7 @@ $capabilities = array(
         )
     ),
 
-    // View session cancellations
+    // View session cancellations.
     'mod/facetoface:viewcancellations' => array(
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
@@ -143,8 +172,8 @@ $capabilities = array(
         ),
     ),
 
-    // Ability to overbook a session by signing up for it
-    // Users with mod/facetoface:addattendees can also overbook
+    // Ability to overbook a session by signing up for it.
+    // Users with mod/facetoface:addattendees can also overbook.
     'mod/facetoface:overbook' => array(
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
@@ -156,7 +185,7 @@ $capabilities = array(
         ),
     ),
 
-    // Ability to add a new facetoface activity to a course
+    // Ability to add a new facetoface activity to a course.
     'mod/facetoface:addinstance' => array(
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
@@ -166,5 +195,3 @@ $capabilities = array(
         ),
     ),
 );
-
-?>
