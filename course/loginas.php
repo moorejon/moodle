@@ -26,7 +26,8 @@ if (\core\session\manager::is_loggedinas()) {
     //if ($id and $id != SITEID) {
         //redirect("$CFG->wwwroot/course/view.php?id=".$id);
     //} else {
-    redirect("$CFG->wwwroot/");
+    // Hardcoded to view return to 'To Be Registered' report for manager workflow improvement, JM 02-26-2015
+    redirect("$CFG->wwwroot/blocks/configurable_reports/viewreport.php?id=12&courseid=1");
     //}
 }
 

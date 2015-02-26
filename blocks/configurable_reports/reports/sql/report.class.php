@@ -47,9 +47,8 @@ class report_sql extends report_base {
         $sql = str_replace('%%USERID%%', $USER->id, $sql);
         $sql = str_replace('%%COURSEID%%', $COURSE->id, $sql);
         $sql = str_replace('%%CATEGORYID%%', $COURSE->category, $sql);
-
-	// JM added for login as functionality
-	$sql = str_replace('%%SESSKEY%%', sesskey(), $sql);
+        // For login as functionality
+        $sql = str_replace('%%SESSKEY%%', sesskey(), $sql);
 
 		// See http://en.wikipedia.org/wiki/Year_2038_problem
 		$sql = str_replace(array('%%STARTTIME%%','%%ENDTIME%%'),array('0','2145938400'),$sql);
