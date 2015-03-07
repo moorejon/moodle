@@ -117,7 +117,7 @@ class block_configurable_reports extends block_list {
                     }
                 }
                 if (!empty($this->content->items)) {
-                    $this->content->items[] = '========';
+                    //$this->content->items[] = '========';
                 }
             }
         }
@@ -136,7 +136,7 @@ class block_configurable_reports extends block_list {
                     }
                 }
                 if (!empty($this->content->items)) {
-                    $this->content->items[] = '========';
+                    //$this->content->items[] = '========';
                 }
             }
         }

@@ -37,7 +37,7 @@ $csv_cols = [
     'dummy' => 14
 ];
 global $TESTING, $TESTING_POSTFIX, $DB;
-$TESTING = 1;
+//$TESTING = 1;
 $TESTING_POSTFIX = "----THISISATESTENTRY-qweoirfdoisiuhwi0nvs-";
 if ($TESTING){
     if (($h = fopen("test-count.txt", "r")) !== FALSE){
