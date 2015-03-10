@@ -772,6 +772,7 @@ function facetoface_email_substitutions($msg, $facetofacename, $reminderperiod, 
     $msg = str_replace(get_string('placeholder:cost', 'facetoface'), facetoface_cost($user->id, $sessionid, $data, false), $msg);
     $msg = str_replace(get_string('placeholder:alldates', 'facetoface'), $alldates, $msg);
     $msg = str_replace(get_string('placeholder:sessiondate', 'facetoface'), $sessiondate, $msg);
+    $msg = str_replace('[sessiondate]', $sessiondate, $msg);
     $msg = str_replace(get_string('placeholder:starttime', 'facetoface'), $starttime, $msg);
     $msg = str_replace(get_string('placeholder:finishtime', 'facetoface'), $finishtime, $msg);
     $msg = str_replace(get_string('placeholder:duration', 'facetoface'), format_duration($data->duration), $msg);
