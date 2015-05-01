@@ -52,6 +52,12 @@ require_course_login($course);
 $context = context_course::instance($course->id);
 require_capability('mod/facetoface:view', $context);
 
+ $pagetitle = format_string($facetoface->name);
+    $PAGE->set_cm($cm);
+    $PAGE->set_url('/mod/facetoface/cancelsignup.php', array('s' => $s, 'backtoallsessions' => $backtoallsessions, 'confirm' => $confirm));
+    $PAGE->set_title($pagetitle);
+    $PAGE->set_heading($course->fullname);
+
 $returnurl = "$CFG->wwwroot/course/view.php?id=$course->id";
 if ($backtoallsessions) {
     $returnurl = "$CFG->wwwroot/mod/facetoface/view.php?f=$backtoallsessions";
@@ -74,14 +80,14 @@ if ($fromform = $mform->get_data()) { // Form submitted.
     if (facetoface_user_cancel($session, false, false, $errorstr, $fromform->cancelreason)) {
 
         // Logging and events trigger.
-        $params = array(
-            'context'  => $contextmodule,
-            'objectid' => $session->id
-        );
-        $event = \mod_facetoface\event\cancel_booking::create($params);
-        $event->add_record_snapshot('facetoface_sessions', $session);
-        $event->add_record_snapshot('facetoface', $facetoface);
-        $event->trigger();
+//        $params = array(
+//            'context'  => $contextmodule,
+//            'objectid' => $session->id
+//        );
+//        $event = \mod_facetoface\event\cancel_booking::create($params);
+//        $event->add_record_snapshot('facetoface_sessions', $session);
+//        $event->add_record_snapshot('facetoface', $facetoface);
+//       $event->trigger();
 
         $message = get_string('bookingcancelled', 'facetoface');
 

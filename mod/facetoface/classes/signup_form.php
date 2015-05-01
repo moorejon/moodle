@@ -66,8 +66,8 @@ class mod_facetoface_signup_form extends moodleform {
         }
 
         $options = array(
-            MDL_F2F_BOTH => get_string('notificationboth', 'facetoface'),
-            MDL_F2F_TEXT => get_string('notificationemail', 'facetoface'),
+   //         MDL_F2F_BOTH => get_string('notificationboth', 'facetoface'),
+   //         MDL_F2F_TEXT => get_string('notificationemail', 'facetoface'),
             MDL_F2F_ICAL => get_string('notificationical', 'facetoface')
         );
         $mform->addElement('select', 'notificationtype', get_string('notificationtype', 'facetoface'), $options);

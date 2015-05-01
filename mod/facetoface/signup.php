@@ -132,14 +132,14 @@ if ($fromform = $mform->get_data()) { // Form submitted.
     } else if ($submissionid = facetoface_user_signup($session, $facetoface, $course, $fromform->discountcode, $fromform->notificationtype, $statuscode)) {
 
         // Logging and events trigger.
-        $params = array(
-            'context'  => $contextmodule,
-            'objectid' => $session->id
-        );
-        $event = \mod_facetoface\event\signup::create($params);
-        $event->add_record_snapshot('facetoface_sessions', $session);
-        $event->add_record_snapshot('facetoface', $facetoface);
-        $event->trigger();
+//        $params = array(
+//            'context'  => $contextmodule,
+//            'objectid' => $session->id
+//        );
+//        $event = \mod_facetoface\event\signup::create($params);
+//        $event->add_record_snapshot('facetoface_sessions', $session);
+//        $event->add_record_snapshot('facetoface', $facetoface);
+//        $event->trigger();
 
         $message = get_string('bookingcompleted', 'facetoface');
         if ($session->datetimeknown && $facetoface->confirmationinstrmngr) {
@@ -153,14 +153,14 @@ if ($fromform = $mform->get_data()) { // Form submitted.
     } else {
 
         // Logging and events trigger.
-        $params = array(
-            'context'  => $contextmodule,
-            'objectid' => $session->id
-        );
-        $event = \mod_facetoface\event\signup_failed::create($params);
-        $event->add_record_snapshot('facetoface_sessions', $session);
-        $event->add_record_snapshot('facetoface', $facetoface);
-        $event->trigger();
+//        $params = array(
+//            'context'  => $contextmodule,
+//            'objectid' => $session->id
+//        );
+//        $event = \mod_facetoface\event\signup_failed::create($params);
+//        $event->add_record_snapshot('facetoface_sessions', $session);
+//        $event->add_record_snapshot('facetoface', $facetoface);
+//        $event->trigger();
 
         print_error('error:problemsigningup', 'facetoface', $returnurl);
     }
