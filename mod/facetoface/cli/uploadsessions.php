@@ -11,12 +11,16 @@ require_once($CFG->dirroot.'/mod/facetoface/lib.php');
 // Ensure errors are well explained
 set_debugging(DEBUG_DEVELOPER, true);
 
-$options = getopt("f:");
-if(isset($options['f'])){
-    $csv_file = $options['f'];
-    echo("Import file $csv_file\n");
-} else{
-    exit("uploadsessions.php -f <filename>\n");
+if( CLI_SCRIPT ){
+    $options = getopt("f:");
+    if(isset($options['f'])){
+        $csv_file = $options['f'];
+        echo("Import file $csv_file\n");
+    } else{
+        exit("uploadsessions.php -f <filename>\n");
+    }
+} else {
+    $csv_file = 'sessions2.csv';
 }
 
 
@@ -37,7 +41,7 @@ $csv_cols = [
     'dummy' => 14
 ];
 global $TESTING, $TESTING_POSTFIX, $DB;
-$TESTING = 1;
+//$TESTING = 1;
 $TESTING_POSTFIX = "----THISISATESTENTRY-qweoirfdoisiuhwi0nvs-";
 if ($TESTING){
     if (($h = fopen("test-count.txt", "r")) !== FALSE){
