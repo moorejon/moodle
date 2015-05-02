@@ -2569,11 +2569,16 @@ class questionnaire {
         global $SESSION, $DB;
 
         $output = array();
-        $nbinfocols = 9; // Change this if you want more info columns.
+        $nbinfocols = 14; // Change this if you want more info columns.
         $stringother = get_string('other', 'questionnaire');
         $columns = array(
                 get_string('response', 'questionnaire'),
                 get_string('submitted', 'questionnaire'),
+                'Trainer',//todo add getstrings trainer
+                'Building',//todo add getstrings building
+                'Room',//todo add getstrings room
+                'Class Time',//todo add getstrings session,
+                'SessionID',
                 get_string('institution'),
                 get_string('department'),
                 get_string('course'),
@@ -2838,9 +2843,61 @@ class questionnaire {
                 $username = '';
                 $uid = '';
             }
+            // Find matching f2f instance, session, and trainer
+            // Lookup f2f based on $courseid
+            $trainer_names = "";
+            $session_name = "";
+            $location = "";
+            $room = "";
+            $session_time = "";
+            if ($f2f = $DB->get_record('facetoface', array('course' => $courseid))){ // assumes a single f2f per course
+                // Find user's f2f class session booking
+                $sql = "SELECT s.id
+                    FROM {facetoface_sessions} s
+                      JOIN {facetoface_signups} su ON su.sessionid = s.id
+                      JOIN {facetoface_signups_status} st ON st.signupid = su.id
+                    WHERE
+                        su.userid = $uid AND st.superceded = 0 AND st.statuscode <> '10' AND s.facetoface = $f2f->id
+                    LIMIT 1";
+                if($session = $DB->get_record_sql($sql)){
+                    $session_name = $session->id;
+                    // Get trainer(s
+                    $sql = "SELECT group_concat(CONCAT(firstname, ' ', lastname) SEPARATOR ' | ') as trainer
+                        FROM {facetoface_session_roles} sr
+                        LEFT JOIN {user} ut ON sr.userid = ut.id
+                        WHERE sr.sessionid = $session->id";
+                    if( $trainer = $DB->get_record_sql($sql) ){
+                        // todo assign trainer
+                        $trainer_names = $trainer->trainer;
+                    }
+                    // Get session dates
+                    $sql = "SELECT
+                        concat( FROM_UNIXTIME(d.timestart ,'%Y-%m-%d %h:%i%p'), '-', FROM_UNIXTIME(d.timefinish ,'%h:%i%p')) AS time
+                        FROM {facetoface_sessions_dates} d
+                        WHERE sessionid = $session->id";
+                    if( $session_time_rec = $DB->get_record_sql($sql) ){
+                        // todo assign start and end dates
+                        $session_time = $session_time_rec->time;
+                    }
+                    // Get location
+                    if ($location_rec = $DB->get_record('facetoface_session_data', array('sessionid' => $session->id, 'fieldid' => '1'))){
+                        $location = $location_rec->data;
+                    }
+                    // Get room
+                    if ($room_rec = $DB->get_record('facetoface_session_data', array('sessionid' => $session->id, 'fieldid' => '2'))){
+                        $room = $room_rec->data;
+                    }
+                }
+            }
+
             $arr = array();
             array_push($arr, $qid);
             array_push($arr, $submitted);
+            array_push($arr, $trainer_names);
+            array_push($arr, $location);
+            array_push($arr, $room);
+            array_push($arr, $session_time);
+            array_push($arr, $session->id);
             array_push($arr, $institution);
             array_push($arr, $department);
             array_push($arr, $coursename);

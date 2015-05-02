@@ -531,10 +531,11 @@ switch ($action) {
             // SEP. 2007 JR changed file extension to *.txt for non-English Excel users' sake
             // and changed separator to tabulation
             // JAN. 2008 added \r carriage return for better Windows implementation.
-            header("Content-Disposition: attachment; filename=$name.txt");
+            // Reverted to .csv and comma seperators
+            header("Content-Disposition: attachment; filename=$name.csv");
             header("Content-Type: text/comma-separated-values");
         foreach ($output as $row) {
-            $text = implode("\t", $row);
+            $text = implode(",", $row);
             echo $text."\r\n";
         }
         exit();
